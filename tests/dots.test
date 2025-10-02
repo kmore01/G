@@ -1,0 +1,36 @@
+resize 800 600
+loadObject /assig/grau-g/models/default.obj
+solid
+noaxes
+clearColor 1 1 1
+resetCamera
+preset2
+dist 1.5
+
+resetLightPosition
+
+float size 0.02
+bool opaque false
+bool culling false
+grab 1
+
+bool culling true
+grab 2
+
+bool culling true
+bool opaque true
+grab 3
+
+loadObject /assig/grau-g/models/cube.obj
+preset2
+dist 1.9
+float size 0.04
+grab 4
+
+float size 0.02
+bool opaque false
+bool culling false
+loadObject /assig/grau-g/models/default.obj
+preset2
+
+

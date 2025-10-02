@@ -1,0 +1,26 @@
+resize 800 600
+loadObject /assig/grau-g/models/plane.obj
+solid
+noaxes
+clearColor 1 1 1
+resetCamera
+resetLightPosition
+unit0 /assig/grau-g/Textures/emojis.png
+
+float fps 0.5
+
+int mode 0
+float time 3
+grab 1
+
+int mode 1
+float time 3.9
+grab 2
+
+int mode 2
+float time 0
+grab 3
+
+int mode 2
+float time 5.8
+grab 4
