@@ -1,8 +1,11 @@
 #version 330 core
 
-in vec3 L;
-in vec3 N;
-in vec3 V;
+in vec3 NE;
+in vec3 LE;
+in vec3 VE;
+in vec3 LW;
+in vec3 NW;
+in vec3 VW;
 
 out vec4 fragColor;
 
@@ -34,33 +37,13 @@ vec4 light(vec3 N, vec3 V, vec3 L)
         matSpecular * lightSpecular * Ispec;
 }
 
-vec4 phong(vec3 N, vec3 V, vec3 L)
-{
-    // Ambient
-    vec4 ambient = lightAmbient*matAmbient;
-    // Difusa
-    vec3 Nn = normalize(N);
-    vec3 Ln = normalize(L);
-    float aux = max(0.0, dot(Nn, Ln));
-    vec4 difus = lightDiffuse*matDiffuse*aux;
-    // Especular
-    vec4 especular = vec4(0.0);
-    vec3 R = 2*(aux)*Nn-Ln;
-    vec3 Vn = normalize(V);
-    if (aux >= 0.0) {
-        especular = lightSpecular*matSpecular*pow(max(0.0, dot(R, Vn)), matShininess);
-    }
-    return (ambient + difus + especular);
-}
-
-
 void main()
 {
     vec4 color;
     if (world == false) {
-        color = light(N, V, L);
+        color = light(NE, VE, LE);
     } else {
-        color = phong(N, V, L);
+        color = light(NW, VW, LW);
     }
     fragColor = color;
 }

@@ -1,23 +1,36 @@
 #version 330 core
 
-layout (location = 0) in vec3 vertex;
-layout (location = 1) in vec3 normal;
+layout (location = 0) in vec3 vertex; // object space
+layout (location = 1) in vec3 normal; // world space
 
-out vec3 L;
-out vec3 N;
-out vec3 V;
+out vec3 LE;
+out vec3 NE;
+out vec3 VE;
+out vec3 LW;
+out vec3 NW;
+out vec3 VW;
 
-uniform mat4 modelViewProjectionMatrix;
 uniform mat3 normalMatrix;
 uniform mat4 modelViewMatrix;
+uniform mat4 modelViewProjectionMatrix;
 uniform vec4 lightPosition; // similar a gl_LightSource[0].position en eye space
+
+uniform mat4 viewMatrixInverse;
+uniform mat4 viewMatrix;
 
 void main()
 {
-    N = normalMatrix * normal;
+    // Eye space
+    NE = normalMatrix * normal;
     vec3 eyeVertex = vec3(modelViewMatrix * vec4(vertex, 1.0));
-    L = vec3(lightPosition) - eyeVertex;
-    float aux = max(0.0, dot(N, L));
-    V = -eyeVertex; // camara en origen
+    LE = lightPosition.xyz - eyeVertex;
+    float aux = max(0.0, dot(NE, LE));
+    VE = -eyeVertex; // camara en origen
+    // World space 
+    NW = normal;
+    // viewMatrixInverse*vec4(0,0,0,1) --> origen (on esta la camera, en ES) en WS
+    // object space es world space (model transform identitat)
+    VW=(viewMatrixInverse*vec4(0.0 ,0.0, 0.0, 1.0)).xyz - (vec4(vertex, 1.0)).xyz;
+    LW=(viewMatrixInverse*lightPosition).xyz - (vec4(vertex, 1.0)).xyz;
     gl_Position = modelViewProjectionMatrix * vec4(vertex, 1.0);
 }
