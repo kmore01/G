@@ -3,8 +3,8 @@
 layout (location = 0) in vec3 vertex; // object space
 layout (location = 1) in vec3 normal; // world space
 
-out vec3 L;
 out vec3 N;
+out vec3 L;
 out vec3 V;
 
 uniform mat3 normalMatrix;
@@ -13,17 +13,17 @@ uniform mat4 modelViewProjectionMatrix;
 uniform vec4 lightPosition; // similar a gl_LightSource[0].position en eye space
 uniform bool world;
 
-uniform mat4 modelViewMatrixInverse;
+uniform mat4 viewMatrixInverse;
 
 void main()
 {
     if (world) {
         // World space 
         N = normal;
-        // modelViewMatrixInverse*vec4(0,0,0,1) --> origen (on esta la camera, en ES) en WS
+        // viewMatrixInverse*vec4(0,0,0,1) --> origen (on esta la camera, en ES) en WS
         // object space es world space (model transform identitat)
-        V=(modelViewMatrixInverse*vec4(0.0 ,0.0, 0.0, 1.0)).xyz - (vec4(vertex, 1.0)).xyz;
-        L=(modelViewMatrixInverse*lightPosition).xyz - (vec4(vertex, 1.0)).xyz;
+        V = (viewMatrixInverse*vec4(0.0 ,0.0, 0.0, 1.0)).xyz - (vec4(vertex, 1.0)).xyz;
+        L = (viewMatrixInverse*lightPosition).xyz - (vec4(vertex, 1.0)).xyz;
     }
     else {
         // Eye space
