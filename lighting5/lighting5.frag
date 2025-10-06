@@ -1,11 +1,8 @@
 #version 330 core
 
-in vec3 NE;
-in vec3 LE;
-in vec3 VE;
-in vec3 LW;
-in vec3 NW;
-in vec3 VW;
+in vec3 N;
+in vec3 L;
+in vec3 V;
 
 out vec4 fragColor;
 
@@ -16,7 +13,6 @@ uniform vec4 matAmbient;    // similar a gl_FrontMaterial.ambient
 uniform vec4 matDiffuse;    // similar a gl_FrontMaterial.diffuse 
 uniform vec4 matSpecular;   // similar a gl_FrontMaterial.specular
 uniform float matShininess; // similar a gl_FrontMaterial.shininess
-uniform bool world;
 
 vec4 light(vec3 N, vec3 V, vec3 L)
 {
@@ -39,11 +35,5 @@ vec4 light(vec3 N, vec3 V, vec3 L)
 
 void main()
 {
-    vec4 color;
-    if (world == false) {
-        color = light(NE, VE, LE);
-    } else {
-        color = light(NW, VW, LW);
-    }
-    fragColor = color;
+    fragColor = light(N, V, L);
 }
