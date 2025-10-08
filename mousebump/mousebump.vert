@@ -45,9 +45,6 @@ void main()
     
     float t = 1.0 - smoothstep(0.05 * radius, 0.8 * radius, d);
     
-    // Interpolación de posición final
-    vec3 finalPos = mix(eyePosition.xyz, displacedVertex, t);
-    
     // Calcular color
     vec3 blanco = vec3(1.0);
     vec3 rojo = vec3(1.0, 0.0, 0.0);
